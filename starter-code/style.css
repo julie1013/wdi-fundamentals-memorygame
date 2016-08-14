@@ -49,10 +49,6 @@ span {
 }
 
 
-img {
-  width: 1%;
-}
-
 nav {
   background: #808080;
 }
@@ -73,10 +69,18 @@ p:last-of-type {
   text-align: left;
 }
 
+#heart {
+  width: 1%;
+}
+
 .card {
   margin: 50px;
 }
 
 .top {
   margin-top: -40px;
+}
+
+.queen img {
+  width: 150px;
 }

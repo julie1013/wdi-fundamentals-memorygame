@@ -5,25 +5,18 @@ var cards = ["queen", "queen", "king", "king"];
 
 var cardsInPlay = [];
 
-// if (cardOne == cardTwo){
-//   alert ("You've found a match!");
-// } else {
-//   alert ("Sorry. Try again.");
-// }
-
-
 function createBoard(){
   for (var i = 0; i < cards.length; i++){
     var cardElement = document.createElement("div");
-    cardElement.className = "card";
-    cardElement.setAttribute("data-card", cards[i]);
+    cardElement.classList.add("card");
+    cardElement.classList.add(cards[i]);
+    // cardElement.setAttribute("data-card", cards[i]);
     gameBoard.appendChild(cardElement);
     addListeners(cardElement);
 
   }
 }
 
-// addListeners(cardElement);
 createBoard();
 
 function isMatch(cardsInPlay){
@@ -34,7 +27,7 @@ function isMatch(cardsInPlay){
 }
 
 function isTwoCards(){
-  cardsInPlay.push(this.getAttribute('data-card'));
+  // cardsInPlay.push(this.getAttribute('data-card'));
   if (cardsInPlay.length === 2){
     isMatch(cardsInPlay);
     cardsInPlay = [];
@@ -42,24 +35,18 @@ function isTwoCards(){
 }
 
 
-function test(){
-  alert("hi");
-}
-
 function addListeners(cardElement){
   for (var i = 0; i < cards.length; i++){
-    cardElement.addEventListener("click", isTwoCards);
+    cardElement.addEventListener("click", flip);
   }
 }
 
-// function flip(cardElement){
-// cardsInPlay.push(cardElement);
-//   if (this.hasAttribute("queen")){
-//     alert("hi");
-//       cardElement.innerHTML = "<img src='../starter-code/images/queen.png'>";
-//       cardElement.className = "queen";
-//     }
-// }
+function flip(){
+cardsInPlay.push(this.getAttribute('data-card'));
+  if (this.className = "queen"){
+      this.className = "queen-flipped";
+    }
+}
 
 //clicking in the card calls functions:
 //1. flip the card

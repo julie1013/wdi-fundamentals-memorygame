@@ -81,8 +81,7 @@ p:last-of-type {
   margin-top: -40px;
 }
 
-.queen-flipped {
-  background-image: url("../starter-code/images/queen.png");
+.queen-flipped, .king-flipped {
   background-size: 150px 200px;
   height: 200px;
   width: 150px;
@@ -90,3 +89,12 @@ p:last-of-type {
   border-radius: 10px;
   margin: 50px;
 }
+
+.queen-flipped {
+  background-image: url("../starter-code/images/queen.png");
+}
+
+.king-flipped {
+  background-image: url("../starter-code/images/king.png");
+}
+

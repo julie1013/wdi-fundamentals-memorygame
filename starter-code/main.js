@@ -42,13 +42,13 @@ function addListeners(cardElement){
 }
 
 function flip(){
-cardsInPlay.push(this.getAttribute('data-card'));
-  if (this.className === "queen"){
-      alert("hi");
+  cardsInPlay.push(this);
+  if (this.className === "unflipped queen"){
       this.className = "queen-flipped";
+    } else if (this.className === "unflipped king"){
+      this.className = "king-flipped";
     }
 }
-// think this is referring to the wrong thing
 
 //clicking in the card calls functions:
 //1. flip the card

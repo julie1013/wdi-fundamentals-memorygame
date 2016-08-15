@@ -8,7 +8,7 @@ var cardsInPlay = [];
 function createBoard(){
   for (var i = 0; i < cards.length; i++){
     var cardElement = document.createElement("div");
-    cardElement.classList.add("card");
+    cardElement.classList.add("unflipped");
     cardElement.classList.add(cards[i]);
     // cardElement.setAttribute("data-card", cards[i]);
     gameBoard.appendChild(cardElement);

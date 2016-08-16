@@ -24,22 +24,6 @@ footer, nav a, .unflipped, .board {
   float: left;
 }
 
-.board {
-  height: 50%;
-  width: 50%;
-  display: inline-block;
-  margin: 8%;
-}
-
-.unflipped {
-  height: 200px;
-  width: 150px;
-  border: 1px solid black;
-  background: #ffff00;
-  border-radius: 10px;
-}
-
-
 footer {
   background: #808080;
 }
@@ -73,13 +57,23 @@ p:last-of-type {
   width: 1%;
 }
 
+.board {
+  height: 50%;
+  width: 50%;
+  display: inline-block;
+  margin: 8%;
+  margin-top: -10px;
+}
+
 .unflipped {
+  height: 200px;
+  width: 150px;
+  border: 1px solid black;
+  background: #ffff00;
+  border-radius: 10px;
   margin: 50px;
 }
 
-.top {
-  margin-top: -40px;
-}
 
 .queen-flipped, .king-flipped {
   background-size: 150px 200px;
@@ -88,6 +82,7 @@ p:last-of-type {
   border: 1px solid black;
   border-radius: 10px;
   margin: 50px;
+  float: left;
 }
 
 .queen-flipped {

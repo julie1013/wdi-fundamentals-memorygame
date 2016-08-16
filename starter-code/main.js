@@ -20,24 +20,31 @@ function createBoard(){
 createBoard();
 
 function isMatch(cardsInPlay){
+  var firstCard;
+  var secondCard;
   for (var i = 0; i < cardsInPlay.length; i++){
-    return cardsInPlay[i] === cardsInPlay[i + 1];
+    firstCard = cardsInPlay[0].classList[0];
+    secondCard = cardsInPlay[1].classList[0];
   }
-
+  return firstCard === secondCard;
 }
 
 function isTwoCards(){
+  return cardsInPlay.length === 2;
   // cardsInPlay.push(this.getAttribute('data-card'));
-  if (cardsInPlay.length === 2){
-    isMatch(cardsInPlay);
-    cardsInPlay = [];
-  }
+  // if (cardsInPlay.length === 2){
+  //   isMatch(cardsInPlay);
+  //   cardsInPlay = [];
+  // }
 }
 
 
 function addListeners(cardElement){
   for (var i = 0; i < cards.length; i++){
     cardElement.addEventListener("click", flip);
+    if (isTwoCards()){
+      alert("hi");
+    }
   }
 }
 
@@ -48,10 +55,12 @@ function flip(){
     } else if (this.className === "unflipped king"){
       this.className = "king-flipped";
     }
+    if (isTwoCards() && isMatch(cardsInPlay)){
+      alert("hi");
+    }
 }
 
 //clicking in the card calls functions:
-//1. flip the card
 //2. check if two cards are in play
 //3. if two cards are in play, compare them (classes, etc)
 //3a.If they are the same, player wins

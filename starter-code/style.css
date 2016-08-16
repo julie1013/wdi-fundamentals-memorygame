@@ -57,6 +57,15 @@ p:last-of-type {
   width: 1%;
 }
 
+.unflipped, .queen-flipped, .king-flipped {
+  height: 200px;
+  width: 150px;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 50px;
+  float: left;
+}
+
 .board {
   height: 50%;
   width: 50%;
@@ -66,23 +75,12 @@ p:last-of-type {
 }
 
 .unflipped {
-  height: 200px;
-  width: 150px;
-  border: 1px solid black;
   background: #ffff00;
-  border-radius: 10px;
-  margin: 50px;
 }
 
 
 .queen-flipped, .king-flipped {
   background-size: 150px 200px;
-  height: 200px;
-  width: 150px;
-  border: 1px solid black;
-  border-radius: 10px;
-  margin: 50px;
-  float: left;
 }
 
 .queen-flipped {

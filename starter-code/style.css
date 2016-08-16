@@ -57,7 +57,7 @@ p:last-of-type {
   width: 1%;
 }
 
-.unflipped, .queen-flipped, .king-flipped {
+.unflipped, .queen.flipped, .king.flipped {
   height: 200px;
   width: 150px;
   border: 1px solid black;
@@ -79,15 +79,15 @@ p:last-of-type {
 }
 
 
-.queen-flipped, .king-flipped {
+.flipped {
   background-size: 150px 200px;
 }
 
-.queen-flipped {
+.queen.flipped {
   background-image: url("../starter-code/images/queen.png");
 }
 
-.king-flipped {
+.king.flipped {
   background-image: url("../starter-code/images/king.png");
 }
 

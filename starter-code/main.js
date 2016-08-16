@@ -8,8 +8,8 @@ var cardsInPlay = [];
 function createBoard(){
   for (var i = 0; i < cards.length; i++){
     var cardElement = document.createElement("div");
-    cardElement.classList.add("unflipped");
     cardElement.classList.add(cards[i]);
+    cardElement.classList.add("unflipped");
     // cardElement.setAttribute("data-card", cards[i]);
     gameBoard.appendChild(cardElement);
     addListeners(cardElement);
@@ -50,18 +50,33 @@ function addListeners(cardElement){
 
 function flip(){
   cardsInPlay.push(this);
-  if (this.className === "unflipped queen"){
-      this.className = "queen-flipped";
-    } else if (this.className === "unflipped king"){
-      this.className = "king-flipped";
+  if (this.className === "queen unflipped"){
+      this.className = "queen flipped";
+    } else if (this.className === "king unflipped"){
+      this.className = "king flipped";
     }
     if (isTwoCards() && isMatch(cardsInPlay)){
-      alert("hi");
+      alert("you win!");
+    } else if (isTwoCards() && !isMatch(cardsInPlay)){
+      unFlipCards();
     }
 }
 
+// function winCheck(){
+//   if (!isMatch(cardsInPlay)){
+//     unflipCards();
+//   }
+// }
+
+function unFlipCards(){
+  cardsInPlay = [];
+  var cards = gameBoard.children;
+  for (var i = 0; i < cards.length; i++){
+    cards[i].classList.remove("flipped");
+    cards[i].classList.add("unflipped");
+  }
+}
+
 //clicking in the card calls functions:
-//2. check if two cards are in play
-//3. if two cards are in play, compare them (classes, etc)
 //3a.If they are the same, player wins
 //3b.If cards aren't the same, cards are flipped over again

@@ -56,17 +56,12 @@ function flip(){
       this.className = "king flipped";
     }
     if (isTwoCards() && isMatch(cardsInPlay)){
-      alert("you win!");
+      // alert("You win!");
     } else if (isTwoCards() && !isMatch(cardsInPlay)){
-      unFlipCards();
+      setTimeout(unFlipCards, 3000);
     }
 }
 
-// function winCheck(){
-//   if (!isMatch(cardsInPlay)){
-//     unflipCards();
-//   }
-// }
 
 function unFlipCards(){
   cardsInPlay = [];
@@ -77,6 +72,3 @@ function unFlipCards(){
   }
 }
 
-//clicking in the card calls functions:
-//3a.If they are the same, player wins
-//3b.If cards aren't the same, cards are flipped over again

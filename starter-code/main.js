@@ -121,3 +121,4 @@ function deckSize(){
   }
   return numOfCards;
 }
+

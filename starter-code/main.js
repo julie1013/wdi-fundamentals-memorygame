@@ -43,8 +43,14 @@ function addListeners(cardElement){
   for (var i = 0; i < cards.length; i++){
     cardElement.addEventListener("click", flip);
     if (isTwoCards()){
-      alert("hi");
     }
+  }
+}
+
+function removeEventListener(cardElement){
+  var cards = gameBoard.children;
+  for (var i = 0; i < cards.length; i++){
+      cards[i].removeEventListener("click", flip);
   }
 }
 
@@ -58,6 +64,7 @@ function flip(){
     if (isTwoCards() && isMatch(cardsInPlay)){
       // alert("You win!");
     } else if (isTwoCards() && !isMatch(cardsInPlay)){
+      removeEventListener(cards);
       setTimeout(unFlipCards, 3000);
     }
 }
@@ -69,6 +76,8 @@ function unFlipCards(){
   for (var i = 0; i < cards.length; i++){
     cards[i].classList.remove("flipped");
     cards[i].classList.add("unflipped");
+    cards[i].addEventListener("click", flip);
   }
 }
+
 

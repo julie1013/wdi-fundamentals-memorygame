@@ -5,15 +5,35 @@ var cards = ["queen", "queen", "king", "king"];
 
 var cardsInPlay = [];
 
+function shuffle(cards){
+  var currentIndex = cards.length;
+  var temporaryValue;
+  var randomIndex;
+  while (0 !== currentIndex){
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    temporaryValue = cards[currentIndex];
+    cards[currentIndex] = cards[randomIndex];
+    cards[randomIndex] = temporaryValue;
+  }
+
+  return cards;
+};
+
 function createBoard(){
   for (var i = 0; i < cards.length; i++){
     var cardElement = document.createElement("div");
-    cardElement.classList.add(cards[i]);
+    if (i % 2 === 0){
+      cardElement.classList.add("king");
+    } else {
+      cardElement.classList.add("queen");
+    }
+    // cardElement.classList.add(cards[i]);
     cardElement.classList.add("unflipped");
     // cardElement.setAttribute("data-card", cards[i]);
     gameBoard.appendChild(cardElement);
     addListeners(cardElement);
-
+    shuffle(cards);
   }
 }
 
@@ -47,7 +67,7 @@ function addListeners(cardElement){
   }
 }
 
-function removeEventListener(cardElement){
+function removeListeners(cardElement){
   var cards = gameBoard.children;
   for (var i = 0; i < cards.length; i++){
       cards[i].removeEventListener("click", flip);
@@ -61,10 +81,10 @@ function flip(){
     } else if (this.className === "king unflipped"){
       this.className = "king flipped";
     }
-    if (isTwoCards() && isMatch(cardsInPlay)){
-      // alert("You win!");
-    } else if (isTwoCards() && !isMatch(cardsInPlay)){
-      removeEventListener(cards);
+  if (isTwoCards() && !isMatch(cardsInPlay)){
+      removeListeners(cards);
+      setTimeout(unFlipCards, 3000);
+    } else if (allCards()){
       setTimeout(unFlipCards, 3000);
     }
 }
@@ -80,4 +100,8 @@ function unFlipCards(){
   }
 }
 
+
+function allCards(){
+  return cards.length === cardsInPlay.length;
+}
 

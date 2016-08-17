@@ -57,25 +57,26 @@ function isMatch(cardsInPlay){
   return firstCard === secondCard;
 }
 
-function isTwoCards(){
-  return cardsInPlay.length === 2;
-  // cardsInPlay.push(this.getAttribute('data-card'));
-  // if (cardsInPlay.length === 2){
-  //   isMatch(cardsInPlay);
-  //   cardsInPlay = [];
-  // }
-}
+// function isTwoCards(){
+//   return cardsInPlay.length === 2;
+//   // cardsInPlay.push(this.getAttribute('data-card'));
+//   // if (cardsInPlay.length === 2){
+//   //   isMatch(cardsInPlay);
+//   //   cardsInPlay = [];
+//   // }
+// }
 
 
-function addListeners(cardElement){
+function addListeners(){
+  var cards = gameBoard.children;
   for (var i = 0; i < cards.length; i++){
-    cardElement.addEventListener("click", flip);
-    if (isTwoCards()){
-    }
+    cards[i].addEventListener("click", flip);
+    // if (isTwoCards()){
+    // }
   }
 }
 
-function removeListeners(cardElement){
+function removeListeners(){
   var cards = gameBoard.children;
   for (var i = 0; i < cards.length; i++){
       cards[i].removeEventListener("click", flip);
@@ -89,9 +90,11 @@ function flip(){
     } else if (this.className === "king unflipped"){
       this.className = "king flipped";
     }
-  if (isTwoCards() && !isMatch(cardsInPlay)){
+    lastTwo();
+  if (cardsInPlay.length === 2 && !isMatch(cardsInPlay)){
       removeListeners(cards);
       setTimeout(unFlipCards, 3000);
+      addListeners();
     } else if (allCards()){
       setTimeout(unFlipCards, 3000);
     }
@@ -99,12 +102,11 @@ function flip(){
 
 
 function unFlipCards(){
-  cardsInPlay = [];
-  var cards = gameBoard.children;
-  for (var i = 0; i < cards.length; i++){
-    cards[i].classList.remove("flipped");
-    cards[i].classList.add("unflipped");
-    cards[i].addEventListener("click", flip);
+  // var cards = gameBoard.children;
+  for (var i = 0; i < cardsInPlay.length; i++){
+    cardsInPlay[i].classList.remove("flipped");
+    cardsInPlay[i].classList.add("unflipped");
+    cardsInPlay[i].addEventListener("click", flip);
   }
 }
 
@@ -122,3 +124,9 @@ function deckSize(){
   return numOfCards;
 }
 
+function lastTwo() {
+  if (cardsInPlay.length > 2){
+    cardsInPlay.splice(0, cardsInPlay.length - 2);
+  }
+  return cardsInPlay;
+}

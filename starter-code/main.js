@@ -1,7 +1,11 @@
 
 var gameBoard = document.getElementById("game-board");
 
-var cards = ["queen", "queen", "king", "king"];
+// var cards = ["queen", "queen", "king", "king"];
+
+var cards = [];
+
+var numOfCards;
 
 var cardsInPlay = [];
 
@@ -21,12 +25,16 @@ function shuffle(cards){
 };
 
 function createBoard(){
-  for (var i = 0; i < cards.length; i++){
+  deckSize();
+  console.log(numOfCards);
+  for (var i = 0; i < numOfCards; i++){
     var cardElement = document.createElement("div");
     if (i % 2 === 0){
       cardElement.classList.add("king");
+      cards.push(cardElement);
     } else {
       cardElement.classList.add("queen");
+      cards.push(cardElement);
     }
     // cardElement.classList.add(cards[i]);
     cardElement.classList.add("unflipped");
@@ -105,3 +113,11 @@ function allCards(){
   return cards.length === cardsInPlay.length;
 }
 
+function deckSize(){
+  var rawNumber = Math.floor(Math.random() * 100);
+  numOfCards = (2 * Math.round(rawNumber / 2));
+  if (numOfCards < 4){
+    numOfCards = numOfCards + 4;
+  }
+  return numOfCards;
+}

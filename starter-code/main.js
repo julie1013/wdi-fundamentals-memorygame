@@ -25,7 +25,6 @@ function shuffle(cards){
 
 function createBoard(){
   deckSize();
-  shuffle(cards);
   for (var i = 0; i < numOfCards; i++){
     var cardElement = document.createElement("div");
     if (i % 2 === 0){
@@ -39,6 +38,7 @@ function createBoard(){
     gameBoard.appendChild(cardElement);
     addListeners(cardElement);
   }
+  shuffle(cards);
 }
 
 createBoard();
@@ -52,15 +52,6 @@ function isMatch(cardsInPlay){
   }
   return firstCard === secondCard;
 }
-
-// function isTwoCards(){
-//   return cardsInPlay.length === 2;
-//   // cardsInPlay.push(this.getAttribute('data-card'));
-//   // if (cardsInPlay.length === 2){
-//   //   isMatch(cardsInPlay);
-//   //   cardsInPlay = [];
-//   // }
-// }
 
 function matched(a, b){
   confirmedCards.push(a, b);
@@ -145,6 +136,7 @@ function lastTwo() {
 
 //figure out how to reset when all cards are flipped
 //make sure cards are randomized!
+//Should I set it that number of cards when divided must yield an even number?
 //"Play again" button
 //score?
 

@@ -125,10 +125,11 @@ function restart(){
 
 function deckSize(){
   var rawNumber = Math.floor(Math.random() * 100);
+  while (rawNumber === 0){
+    rawNumber = Math.floor(Math.random() * 100);
+  }
   numOfCards = (2 * Math.round(rawNumber / 2));
-  if (numOfCards === 0){
-    numOfCards = 4;
-  } else if (numOfCards % 4 !==0){
+  if (numOfCards % 4 !==0){
     numOfCards = numOfCards + 2;
   }
   return numOfCards;
@@ -143,7 +144,8 @@ function lastTwo() {
 
 
 //figure out how to reset when all cards are flipped
+//make sure cards are randomized!
 //"Play again" button
 //score?
-//make sure cards are randomized!
+
 

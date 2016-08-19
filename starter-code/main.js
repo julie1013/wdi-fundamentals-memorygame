@@ -90,7 +90,6 @@ function flip(){
   if (isTwoCards() && !isMatch(cardsInPlay)){
       removeListeners();
       setTimeout(unFlipCards, 3000);
-      addListeners();
     } else if (isTwoCards() && isMatch(cardsInPlay)){
       matched(cardsInPlay[0], cardsInPlay[1]);
       cardsInPlay = [];
@@ -109,6 +108,7 @@ function unFlipCards(){
     cardsInPlay[i].classList.add("unflipped");
   }
   cardsInPlay =[];
+  addListeners();
 }
 
 
@@ -136,7 +136,6 @@ function lastTwo() {
 
 
 //check for elements not containing class "unflipped" OR all elements with class "flipped" for allCards() function
-//figure out how to fix removeListeners
 //figure out how to reset when all cards are flipped
 //"Play again" button
 //score?

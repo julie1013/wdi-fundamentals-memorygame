@@ -7,6 +7,8 @@ var numOfCards;
 
 var cardsInPlay = [];
 
+var confirmedCards = [];
+
 function shuffle(cards){
   var currentIndex = cards.length;
   var temporaryValue;
@@ -60,12 +62,14 @@ function isMatch(cardsInPlay){
 //   // }
 // }
 
+function matched(a, b){
+  confirmedCards.push(a, b);
+  return confirmedCards;
+}
 
 function addListeners(){
   for (var i = 0; i < cards.length; i++){
     cards[i].addEventListener("click", flip);
-    // if (isTwoCards()){
-    // }
   }
 }
 
@@ -83,17 +87,21 @@ function flip(){
       this.className = "king flipped";
     }
     lastTwo();
-  if (cardsInPlay.length === 2 && !isMatch(cardsInPlay)){
+  if (isTwoCards() && !isMatch(cardsInPlay)){
       removeListeners();
       setTimeout(unFlipCards, 3000);
       addListeners();
-    } else if (cardsInPlay.length === 2 && isMatch(cardsInPlay)){
+    } else if (isTwoCards() && isMatch(cardsInPlay)){
+      matched(cardsInPlay[0], cardsInPlay[1]);
       cardsInPlay = [];
-    // } else if (allCards()){
-    //   setTimeout(unFlipCards, 3000);
+    } else if (allCards()){
+      setTimeout(createBoard, 3000);
     }
 }
 
+function isTwoCards(){
+  return cardsInPlay.length === 2;
+}
 
 function unFlipCards(){
   for (var i = 0; i < cardsInPlay.length; i++){
@@ -104,17 +112,17 @@ function unFlipCards(){
 }
 
 
-// function allCards(){
-//   for (var i = 0; i < cards.length; i++){
-//     if (cards[i].classList.contains("un"))
-//   }
-// }
+function allCards(){
+ return confirmedCards.length === cards.length;
+}
 
 function deckSize(){
   var rawNumber = Math.floor(Math.random() * 100);
   numOfCards = (2 * Math.round(rawNumber / 2));
   if (numOfCards < 4){
-    numOfCards = numOfCards + 4;
+    numOfCards = 4;
+  } else if (numOfCards % 4 !==0){
+    numOfCards = numOfCards + 2;
   }
   return numOfCards;
 }
@@ -129,9 +137,8 @@ function lastTwo() {
 
 //check for elements not containing class "unflipped" OR all elements with class "flipped" for allCards() function
 //figure out how to fix removeListeners
-//why is the unflip function activating even when there is a match??
-//Why doesn't unflip function activate when there's a mismatch a second time??
+//figure out how to reset when all cards are flipped
 //"Play again" button
-//score
+//score?
 //make sure cards are randomized!
 

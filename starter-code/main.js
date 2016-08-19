@@ -1,8 +1,6 @@
 
 var gameBoard = document.getElementById("game-board");
 
-// var cards = ["queen", "queen", "king", "king"];
-
 var cards = [];
 
 var numOfCards;
@@ -20,13 +18,12 @@ function shuffle(cards){
     cards[currentIndex] = cards[randomIndex];
     cards[randomIndex] = temporaryValue;
   }
-
   return cards;
 };
 
 function createBoard(){
   deckSize();
-  console.log(numOfCards);
+  shuffle(cards);
   for (var i = 0; i < numOfCards; i++){
     var cardElement = document.createElement("div");
     if (i % 2 === 0){
@@ -36,12 +33,9 @@ function createBoard(){
       cardElement.classList.add("queen");
       cards.push(cardElement);
     }
-    // cardElement.classList.add(cards[i]);
     cardElement.classList.add("unflipped");
-    // cardElement.setAttribute("data-card", cards[i]);
     gameBoard.appendChild(cardElement);
     addListeners(cardElement);
-    shuffle(cards);
   }
 }
 
@@ -68,7 +62,6 @@ function isMatch(cardsInPlay){
 
 
 function addListeners(){
-  var cards = gameBoard.children;
   for (var i = 0; i < cards.length; i++){
     cards[i].addEventListener("click", flip);
     // if (isTwoCards()){
@@ -77,7 +70,6 @@ function addListeners(){
 }
 
 function removeListeners(){
-  var cards = gameBoard.children;
   for (var i = 0; i < cards.length; i++){
       cards[i].removeEventListener("click", flip);
   }
@@ -92,28 +84,31 @@ function flip(){
     }
     lastTwo();
   if (cardsInPlay.length === 2 && !isMatch(cardsInPlay)){
-      removeListeners(cards);
+      removeListeners();
       setTimeout(unFlipCards, 3000);
       addListeners();
-    } else if (allCards()){
-      setTimeout(unFlipCards, 3000);
+    } else if (cardsInPlay.length === 2 && isMatch(cardsInPlay)){
+      cardsInPlay = [];
+    // } else if (allCards()){
+    //   setTimeout(unFlipCards, 3000);
     }
 }
 
 
 function unFlipCards(){
-  // var cards = gameBoard.children;
   for (var i = 0; i < cardsInPlay.length; i++){
     cardsInPlay[i].classList.remove("flipped");
     cardsInPlay[i].classList.add("unflipped");
-    cardsInPlay[i].addEventListener("click", flip);
   }
+  cardsInPlay =[];
 }
 
 
-function allCards(){
-  return cards.length === cardsInPlay.length;
-}
+// function allCards(){
+//   for (var i = 0; i < cards.length; i++){
+//     if (cards[i].classList.contains("un"))
+//   }
+// }
 
 function deckSize(){
   var rawNumber = Math.floor(Math.random() * 100);
@@ -130,3 +125,13 @@ function lastTwo() {
   }
   return cardsInPlay;
 }
+
+
+//check for elements not containing class "unflipped" OR all elements with class "flipped" for allCards() function
+//figure out how to fix removeListeners
+//why is the unflip function activating even when there is a match??
+//Why doesn't unflip function activate when there's a mismatch a second time??
+//"Play again" button
+//score
+//make sure cards are randomized!
+

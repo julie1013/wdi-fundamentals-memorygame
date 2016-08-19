@@ -128,8 +128,6 @@ function deckSize(){
   numOfCards = (2 * Math.round(rawNumber / 2));
   if (numOfCards === 0){
     numOfCards = 4;
-  } else if (numOfCards >= 1 && numOfCards <= 3){
-    numOfCards = 8;
   } else if (numOfCards % 4 !==0){
     numOfCards = numOfCards + 2;
   }

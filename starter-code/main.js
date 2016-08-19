@@ -93,8 +93,9 @@ function flip(){
     } else if (isTwoCards() && isMatch(cardsInPlay)){
       matched(cardsInPlay[0], cardsInPlay[1]);
       cardsInPlay = [];
-    } else if (allCards()){
-      setTimeout(createBoard, 3000);
+        if (allCards()){
+      setTimeout(restart, 3000);
+      }
     }
 }
 
@@ -116,11 +117,19 @@ function allCards(){
  return confirmedCards.length === cards.length;
 }
 
+function restart(){
+  var cards = document.getElementsByClassName("flipped");
+  cards.parentNode.removeChild(cards);
+  createBoard();
+}
+
 function deckSize(){
   var rawNumber = Math.floor(Math.random() * 100);
   numOfCards = (2 * Math.round(rawNumber / 2));
-  if (numOfCards < 4){
+  if (numOfCards === 0){
     numOfCards = 4;
+  } else if (numOfCards >= 1 && numOfCards <== 3){
+    numOfCards = 8;
   } else if (numOfCards % 4 !==0){
     numOfCards = numOfCards + 2;
   }
@@ -135,7 +144,6 @@ function lastTwo() {
 }
 
 
-//check for elements not containing class "unflipped" OR all elements with class "flipped" for allCards() function
 //figure out how to reset when all cards are flipped
 //"Play again" button
 //score?

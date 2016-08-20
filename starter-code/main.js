@@ -27,21 +27,39 @@ function createBoard(){
   deckSize();
   for (var i = 0; i < numOfCards; i++){
     var cardElement = document.createElement("div");
-    if (i % 2 === 0){
-      cardElement.classList.add("king");
+    // if (i % 2 === 0){
+    //   cardElement.classList.add("king");
       cards.push(cardElement);
-    } else {
-      cardElement.classList.add("queen");
-      cards.push(cardElement);
+    // } else {
+    //   cardElement.classList.add("queen");
+      // cards.push(cardElement);
+      // cardElement.classList.add("unflipped");
+    // gameBoard.appendChild(cardElement);
+    // addListeners(cardElement);
     }
-    cardElement.classList.add("unflipped");
-    gameBoard.appendChild(cardElement);
-    addListeners(cardElement);
+
+    return cards;
   }
-  shuffle(cards);
+// }
+
+function drawBoard(){
+  createBoard();
+
+  for (var i = 0; i < cards.length; i++) {
+     if (i % 2 === 0){
+      cards[i].classList.add("king");
+  } else {
+      cards[i].classList.add("queen");
+    }
+    cards[i].classList.add("unflipped");
+    gameBoard.appendChild(cards[i]);
+    addListeners(cards[i]);
+    // shuffle(cards);
+  }
 }
 
-createBoard();
+// createBoard();
+drawBoard();
 
 function isMatch(cardsInPlay){
   var firstCard;
@@ -124,6 +142,7 @@ function lastTwo() {
   }
   return cardsInPlay;
 }
+
 
 
 //figure out how to reset when all cards are flipped

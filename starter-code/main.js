@@ -3,7 +3,7 @@ var gameBoard = document.getElementById("game-board");
 
 var cards = [];
 
-var numOfCards;
+var numOfCards = deckSize();
 
 var cardsInPlay = [];
 
@@ -115,15 +115,7 @@ function restart(){
 }
 
 function deckSize(){
-  var rawNumber = Math.floor(Math.random() * 100);
-  while (rawNumber === 0){
-    rawNumber = Math.floor(Math.random() * 100);
-  }
-  numOfCards = (2 * Math.round(rawNumber / 2));
-  if (numOfCards % 4 !==0){
-    numOfCards = numOfCards + 2;
-  }
-  return numOfCards;
+  return 4 *(Math.floor(Math.random() * 25) + 1);
 }
 
 function lastTwo() {

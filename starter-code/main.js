@@ -9,14 +9,20 @@ var cardsInPlay = [];
 
 var confirmedCards = [];
 
+var usedIndex = [];
+
 
 function createBoard(){
   var currentIndex = numOfCards;
-  var temporaryValue;
   var randomIndex;
   while (0 !== currentIndex){
     var card = document.createElement("div");
     randomIndex = Math.floor(Math.random() * currentIndex);
+    if (usedIndex.length > 0){
+        while (duplicateIndex(usedIndex, randomIndex)){
+          randomIndex = Math.floor(Math.random() * currentIndex);
+        }
+      }
     if (randomIndex % 2 === 0){
       card.setAttribute("class", "king");
     } else {
@@ -26,13 +32,23 @@ function createBoard(){
     addListeners();
     gameBoard.appendChild(card);
     cards.push(card);
-
+    usedIndex.push(randomIndex);
+    console.log(usedIndex);
     currentIndex--;
   }
 }
 
 
 createBoard();
+
+function duplicateIndex(array, element){
+  for (var i = 0; i < array.length; i++){
+    if (element === array[i]){
+      return true;
+    }
+  }
+  return false;
+}
 
 
 function isMatch(cardsInPlay){
@@ -119,9 +135,6 @@ function lastTwo() {
 
 
 //figure out how to reset when all cards are flipped
-//make sure cards are randomized!
-//Should I set it that number of cards when divided must yield an even number?
 //"Play again" button
-//score?
-
+//once random index is used, it cannot be used again
 

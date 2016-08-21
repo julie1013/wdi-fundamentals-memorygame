@@ -9,57 +9,31 @@ var cardsInPlay = [];
 
 var confirmedCards = [];
 
-function shuffle(cards){
-  var currentIndex = cards.length;
+
+function createBoard(){
+  var currentIndex = numOfCards;
   var temporaryValue;
   var randomIndex;
   while (0 !== currentIndex){
+    var card = document.createElement("div");
     randomIndex = Math.floor(Math.random() * currentIndex);
+    if (randomIndex % 2 === 0){
+      card.setAttribute("class", "king");
+    } else {
+      card.setAttribute("class", "queen");
+    }
+    card.classList.add("unflipped");
+    addListeners();
+    gameBoard.appendChild(card);
+    cards.push(card);
+
     currentIndex--;
-    temporaryValue = cards[currentIndex];
-    cards[currentIndex] = cards[randomIndex];
-    cards[randomIndex] = temporaryValue;
-  }
-  return cards;
-};
-
-function createBoard(){
-  deckSize();
-  for (var i = 0; i < numOfCards; i++){
-    var cardElement = document.createElement("div");
-    // if (i % 2 === 0){
-    //   cardElement.classList.add("king");
-      cards.push(cardElement);
-    // } else {
-    //   cardElement.classList.add("queen");
-      // cards.push(cardElement);
-      // cardElement.classList.add("unflipped");
-    // gameBoard.appendChild(cardElement);
-    // addListeners(cardElement);
-    }
-
-    return cards;
-  }
-// }
-
-function drawBoard(){
-  createBoard();
-
-  for (var i = 0; i < cards.length; i++) {
-     if (i % 2 === 0){
-      cards[i].classList.add("king");
-  } else {
-      cards[i].classList.add("queen");
-    }
-    cards[i].classList.add("unflipped");
-    gameBoard.appendChild(cards[i]);
-    addListeners(cards[i]);
-    // shuffle(cards);
   }
 }
 
-// createBoard();
-drawBoard();
+
+createBoard();
+
 
 function isMatch(cardsInPlay){
   var firstCard;
@@ -127,9 +101,8 @@ function allCards(){
 }
 
 function restart(){
-  var cards = document.getElementsByClassName("flipped");
-  cards.parentNode.removeChild(cards);
-  createBoard();
+  cards = [];
+  gameBoard.innerHTML = "";
 }
 
 function deckSize(){

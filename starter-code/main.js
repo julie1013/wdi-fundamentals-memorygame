@@ -18,11 +18,9 @@ function createBoard(){
   while (0 !== currentIndex){
     var card = document.createElement("div");
     randomIndex = Math.floor(Math.random() * currentIndex);
-    if (usedIndex.length > 0){
-        while (duplicateIndex(usedIndex, randomIndex)){
-          randomIndex = Math.floor(Math.random() * currentIndex);
-        }
-      }
+      if (duplicateIndex(usedIndex, randomIndex)){
+        randomIndex = Math.floor(Math.random() * currentIndex);
+    }
     if (randomIndex % 2 === 0){
       card.setAttribute("class", "king");
     } else {
@@ -116,10 +114,10 @@ function allCards(){
  return confirmedCards.length === cards.length;
 }
 
-function restart(){
-  cards = [];
-  gameBoard.innerHTML = "";
-}
+// function restart(){
+//   cards = [];
+//   gameBoard.innerHTML = "";
+// }
 
 function deckSize(){
   return 4 *(Math.floor(Math.random() * 25) + 1);

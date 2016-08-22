@@ -37,7 +37,7 @@ footer {
 }
 
 span {
-  color: #ff0000;
+  color: #fff000;
 }
 
 
@@ -51,6 +51,7 @@ nav a {
   color: white;
   padding: 35px;
   display: block;
+  font-size: 25px;
 }
 
 nav a:hover {

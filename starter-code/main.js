@@ -1,9 +1,9 @@
 
 var gameBoard = document.getElementById("game-board");
 
-var cards = [];
-
 var numOfCards = deckSize();
+
+var cards = [];
 
 var cardsInPlay = [];
 
@@ -20,6 +20,7 @@ function createBoard(){
     randomIndex = Math.floor(Math.random() * currentIndex);
       if (duplicateIndex(usedIndex, randomIndex)){
         randomIndex = Math.floor(Math.random() * currentIndex);
+        //this was originally a while loop, but it goes infinite. The "if" is just a temporary placeholder until I figure out a solution.
     }
     if (randomIndex % 2 === 0){
       card.setAttribute("class", "king");
@@ -47,6 +48,7 @@ function duplicateIndex(array, element){
   }
   return false;
 }
+//check if randomIndex is already in array
 
 
 function isMatch(cardsInPlay){
@@ -58,23 +60,27 @@ function isMatch(cardsInPlay){
   }
   return firstCard === secondCard;
 }
+//check if two cards are matched
 
 function matched(a, b){
   confirmedCards.push(a, b);
   return confirmedCards;
 }
+//pushes matched cards into a new array that keeps track of how many cards have been flipped
 
 function addListeners(){
   for (var i = 0; i < cards.length; i++){
     cards[i].addEventListener("click", flip);
   }
 }
+//adds event listeners
 
 function removeListeners(){
   for (var i = 0; i < cards.length; i++){
       cards[i].removeEventListener("click", flip);
   }
 }
+//removes event listeners
 
 function flip(){
   cardsInPlay.push(this);
@@ -90,15 +96,16 @@ function flip(){
     } else if (isTwoCards() && isMatch(cardsInPlay)){
       matched(cardsInPlay[0], cardsInPlay[1]);
       cardsInPlay = [];
-        if (allCards()){
-      setTimeout(restart, 3000);
+        // if (allCards()){
+      // setTimeout(restart, 3000);
+        }
       }
-    }
-}
+//on "click" this function is called. If two cards are a match, they are pushed to the confirmed cards array.
 
 function isTwoCards(){
   return cardsInPlay.length === 2;
 }
+//checks if two cards are in play
 
 function unFlipCards(){
   for (var i = 0; i < cardsInPlay.length; i++){
@@ -108,11 +115,12 @@ function unFlipCards(){
   cardsInPlay =[];
   addListeners();
 }
-
+//unflip non-matched cards
 
 function allCards(){
  return confirmedCards.length === cards.length;
 }
+//confirms that all cards have been flipped
 
 // function restart(){
 //   cards = [];
@@ -122,6 +130,7 @@ function allCards(){
 function deckSize(){
   return 4 *(Math.floor(Math.random() * 25) + 1);
 }
+//randomly chooses a number (divisible by 4) between 4 and 100
 
 function lastTwo() {
   if (cardsInPlay.length > 2){
@@ -129,10 +138,11 @@ function lastTwo() {
   }
   return cardsInPlay;
 }
-
+//returns an array of the last two cards that were played
 
 
 //figure out how to reset when all cards are flipped
 //"Play again" button
-//once random index is used, it cannot be used again
+//once random index is used, it cannot be used again-- figure out how to prevent duplicate indexes from being used
+//If possible, center bottom row
 

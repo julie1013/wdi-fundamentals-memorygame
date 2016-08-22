@@ -3,6 +3,8 @@ var gameBoard = document.getElementById("game-board");
 
 var numOfCards = deckSize();
 
+var rank;
+
 var cards = [];
 
 var cardsInPlay = [];
@@ -22,11 +24,8 @@ function createBoard(){
         randomIndex = Math.floor(Math.random() * currentIndex);
         //this was originally a while loop, but it goes infinite. The "if" is just a temporary placeholder until I figure out a solution.
     }
-    if (randomIndex % 2 === 0){
-      card.setAttribute("class", "king");
-    } else {
-      card.setAttribute("class", "queen");
-    }
+    setRank(randomIndex);
+    card.setAttribute("class", rank);
     card.classList.add("unflipped");
     addListeners();
     gameBoard.appendChild(card);
@@ -39,6 +38,14 @@ function createBoard(){
 
 
 createBoard();
+
+function setRank(index){
+  if (index % 2 === 0) {
+    rank = "king";
+  } else {
+    rank = "queen";
+  }
+}
 
 function duplicateIndex(array, element){
   for (var i = 0; i < array.length; i++){

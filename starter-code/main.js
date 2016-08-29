@@ -13,31 +13,36 @@ var confirmedCards = [];
 
 var usedIndex = [];
 
+function createBoard(length){
+    for (var i = 0; i < length; i++){
+      cards.push(cards[i]);
+    }
+    return cards;
+  }
 
-function createBoard(){
-  var currentIndex = numOfCards;
+function shuffle(cards){
+  var currentIndex = cards.length;
+  var temporaryValue;
   var randomIndex;
   while (0 !== currentIndex){
-    var card = document.createElement("div");
     randomIndex = Math.floor(Math.random() * currentIndex);
-      if (duplicateIndex(usedIndex, randomIndex)){
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        //this was originally a while loop, but it goes infinite. The "if" is just a temporary placeholder until I figure out a solution.
-    }
+    cards[randomIndex] = document.createElement("div");
     setRank(randomIndex);
-    card.setAttribute("class", rank);
-    card.classList.add("unflipped");
-    addListeners();
-    gameBoard.appendChild(card);
-    cards.push(card);
-    usedIndex.push(randomIndex);
-    console.log(usedIndex);
+    cards[randomIndex].setAttribute("class", rank);
+    cards[randomIndex].classList.add("unflipped");
+    gameBoard.appendChild(cards[randomIndex]);
     currentIndex--;
+    temporaryValue = cards[currentIndex];
+    cards[currentIndex] = cards[randomIndex];
+    cards[randomIndex] = temporaryValue;
   }
+  addListeners();
+  return cards;
 }
 
 
-createBoard();
+createBoard(numOfCards);
+shuffle(cards);
 
 function deckSize(){
   return 4 *(Math.floor(Math.random() * 25) + 1);
@@ -52,16 +57,6 @@ function setRank(index){
   }
 }
 //sets rank to card
-
-function duplicateIndex(array, element){
-  for (var i = 0; i < array.length; i++){
-    if (element === array[i]){
-      return true;
-    }
-  }
-  return false;
-}
-//check if randomIndex is already in array
 
 function addListeners(){
   for (var i = 0; i < cards.length; i++){
@@ -148,9 +143,8 @@ function allCards(){
 //   gameBoard.innerHTML = "";
 // }
 
-
 //figure out how to reset when all cards are flipped
 //"Play again" button
-//once random index is used, it cannot be used again-- figure out how to prevent duplicate indexes from being used
+//once random index is used, it cannot be used again-- figure out how to prevent
+// duplicate indexes from being used
 //If possible, center bottom row
-

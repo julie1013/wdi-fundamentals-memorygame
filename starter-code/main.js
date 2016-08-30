@@ -5,6 +5,8 @@ var numOfCards = deckSize();
 
 var rank;
 
+var randomIndex;
+
 var cards = [];
 
 var cardsInPlay = [];
@@ -12,6 +14,22 @@ var cardsInPlay = [];
 var confirmedCards = [];
 
 var usedIndex = [];
+
+function getRandomIndex(i){
+  randomIndex = Math.floor(Math.random() * i);
+  // duplicateIndexCheck(usedIndex, randomIndex);
+  return randomIndex;
+}
+
+function duplicateIndexCheck(array, element){
+  for(var i = 0; i < array.length; i++){
+    if(array.includes(element)){
+      getRandomIndex(i);
+    }
+  }
+  return false;
+}
+
 
 function createBoard(length){
     for (var i = 0; i < length; i++){
@@ -28,23 +46,40 @@ function uiConcerns(array, index, className){
 function shuffle(cards){
   var currentIndex = cards.length;
   var temporaryValue;
-  var randomIndex;
+  // var randomIndex;
   while (0 !== currentIndex){
-    randomIndex = Math.floor(Math.random() * currentIndex);
+    // randomIndex = Math.floor(Math.random() * currentIndex);
+    getRandomIndex(currentIndex);
+    while(duplicateIndexCheck(usedIndex, randomIndex)){
+      getRandomIndex(currentIndex);
+    }
+    //Something strange happens when it finds a duplicate. It keeps coming
+    //back with the same randomIndex, eventually returning false for a reason I'm
+    //not sure of. Then it sets it to undefined.
+    //temporaryValue remains undefined throughout
     cards[randomIndex] = document.createElement("div");
     setRank(randomIndex);
     uiConcerns(cards, randomIndex, rank);
-    // cards[randomIndex].setAttribute("class", rank);
-    // cards[randomIndex].classList.add("unflipped");
     gameBoard.appendChild(cards[randomIndex]);
+    usedIndex.push(randomIndex);
     currentIndex--;
     temporaryValue = cards[currentIndex];
     cards[currentIndex] = cards[randomIndex];
     cards[randomIndex] = temporaryValue;
   }
-  addListeners();
+  addListeners(cards);
   return cards;
 }
+
+
+// function duplicateIndex(array, element){
+//   for (var i = 0; i < array.length; i++){
+//     if (element === array[i]){
+//       return true;
+//     }
+//   }
+//   return false;
+// }
 
 
 createBoard(numOfCards);
@@ -64,9 +99,9 @@ function setRank(index){
 }
 //sets rank to card
 
-function addListeners(){
-  for (var i = 0; i < cards.length; i++){
-    cards[i].addEventListener("click", flip);
+function addListeners(array){
+  for (var i = 0; i < array.length; i++){
+    array[i].addEventListener("click", flip);
   }
 }
 //adds event listeners
@@ -143,14 +178,7 @@ function allCards(){
  return confirmedCards.length === cards.length;
 }
 
-function duplicateIndex(array, element){
-  for (var i = 0; i < array.length; i++){
-    if (element === array[i]){
-      return true;
-    }
-  }
-  return false;
-}
+
 //confirms that all cards have been flipped
 
 // function restart(){

@@ -18,7 +18,12 @@ function createBoard(length){
       cards.push(cards[i]);
     }
     return cards;
-  }
+}
+
+function uiConcerns(array, index, className){
+  array[index].setAttribute("class", className);
+  array[index].classList.add("unflipped");
+}
 
 function shuffle(cards){
   var currentIndex = cards.length;
@@ -28,8 +33,9 @@ function shuffle(cards){
     randomIndex = Math.floor(Math.random() * currentIndex);
     cards[randomIndex] = document.createElement("div");
     setRank(randomIndex);
-    cards[randomIndex].setAttribute("class", rank);
-    cards[randomIndex].classList.add("unflipped");
+    uiConcerns(cards, randomIndex, rank);
+    // cards[randomIndex].setAttribute("class", rank);
+    // cards[randomIndex].classList.add("unflipped");
     gameBoard.appendChild(cards[randomIndex]);
     currentIndex--;
     temporaryValue = cards[currentIndex];
@@ -135,6 +141,15 @@ function unFlipCards(){
 
 function allCards(){
  return confirmedCards.length === cards.length;
+}
+
+function duplicateIndex(array, element){
+  for (var i = 0; i < array.length; i++){
+    if (element === array[i]){
+      return true;
+    }
+  }
+  return false;
 }
 //confirms that all cards have been flipped
 

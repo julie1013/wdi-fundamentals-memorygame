@@ -15,19 +15,13 @@ var confirmedCards = [];
 
 var usedIndex = [];
 
-function getRandomIndex(i){
-  randomIndex = Math.floor(Math.random() * i);
-  // duplicateIndexCheck(usedIndex, randomIndex);
+function getRandomIndex(){
+  randomIndex = Math.floor(Math.random() * (numOfCards - 1));
   return randomIndex;
 }
 
 function duplicateIndexCheck(array, element){
-  for(var i = 0; i < array.length; i++){
-    if(array.includes(element)){
-      getRandomIndex(i);
-    }
-  }
-  return false;
+  return array.includes(element);
 }
 
 
@@ -53,10 +47,7 @@ function shuffle(cards){
     while(duplicateIndexCheck(usedIndex, randomIndex)){
       getRandomIndex(currentIndex);
     }
-    //Something strange happens when it finds a duplicate. It keeps coming
-    //back with the same randomIndex, eventually returning false for a reason I'm
-    //not sure of. Then it sets it to undefined.
-    //temporaryValue remains undefined throughout
+    //Still problem with inifinite loop here
     cards[randomIndex] = document.createElement("div");
     setRank(randomIndex);
     uiConcerns(cards, randomIndex, rank);
@@ -83,12 +74,18 @@ function shuffle(cards){
 
 
 createBoard(numOfCards);
-shuffle(cards);
+$(document).ready(function(){
+  shuffle(cards);
+});
 
-function deckSize(){
-  return 4 *(Math.floor(Math.random() * 25) + 1);
-}
+// function deckSize(){
+//   return 4 *(Math.floor(Math.random() * 25) + 1);
+// }
 //randomly chooses a number (divisible by 4) between 4 and 100
+function deckSize(){
+  return 4 *(Math.floor(Math.random() * 2) + 1);
+}
+
 
 function setRank(index){
   if (index % 2 === 0) {

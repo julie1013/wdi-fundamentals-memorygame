@@ -16,7 +16,7 @@ var confirmedCards = [];
 var usedIndex = [];
 
 function getRandomIndex(){
-  randomIndex = Math.floor(Math.random() * (numOfCards - 1));
+  randomIndex = Math.floor(Math.random() * (numOfCards));
   return randomIndex;
 }
 

@@ -18,7 +18,7 @@ let queen = new Card("queen");
 
 // const deckSize = function(){
 //   return 4 *(Math.floor(Math.random() * 25) + 1);
-// }
+// };
 //randomly chooses a number (divisible by 4) between 4 and 100
 const deckSize = function(){
   return 4 *(Math.floor(Math.random() * 2) + 1);
@@ -29,11 +29,7 @@ let numOfCards = deckSize();
 
 const getRandomIndex = function(){
   return Math.floor(Math.random() * (numOfCards));
-}
-
-function duplicateIndexCheck(array, element){
-  return array.includes(element);
-}
+};
 
 const createBoard = function(length){
     for (var i = 0; i < length; i++){
@@ -53,24 +49,10 @@ const setRank = function(index){
 };
 //sets rank to card
 
-const flip = function(){
-  cardsInPlay.push(this);
-  if (this.className === "queen unflipped"){
-      this.className = "queen flipped";
-    } else if (this.className === "king unflipped"){
-      this.className = "king flipped";
-    }
-    lastTwo();
-  if (isTwoCards() && !isMatch(cardsInPlay)){
-      removeListeners(cards);
-      setTimeout(unFlipCards, 3000);
-    } else if (isTwoCards() && isMatch(cardsInPlay)){
-      matched(cardsInPlay[0], cardsInPlay[1]);
-        // if (allCards()){
-      // setTimeout(restart, 3000);
-      cardsInPlay = [];
-        }
-      };
+const allCards = function(){
+ return confirmedCards.length === cards.length;
+};
+
 
 const drawBoard = function(array, type){
   for (let i = 0; i < array.length; i++){
@@ -83,8 +65,11 @@ const drawBoard = function(array, type){
     card.classList.add("unflipped");
     card.addEventListener("click", flip);
     gameBoard.appendChild(card);
-
   }
+};
+
+const duplicateIndexCheck = function(array, element){
+  return array.includes(element);
 };
 
  const shuffle = function(cards){
@@ -115,12 +100,6 @@ const setClass = function(array){
   }
   return array;
 };
-
-createBoard(numOfCards);
-shuffle(cards);
-setClass(cards);
-drawBoard(cards, Card.rank);
-
 
 const addListeners = function(){
   let cards = gameBoard.children;
@@ -184,18 +163,42 @@ const unFlipCards = function(){
   addListeners(cards);
 };
 // //unflip non-matched cards
-//
-// function allCards(){
-//  return confirmedCards.length === cards.length;
-// }
 
+const flip = function(){
+  cardsInPlay.push(this);
+  if (this.className === "queen unflipped"){
+      this.className = "queen flipped";
+    } else if (this.className === "king unflipped"){
+      this.className = "king flipped";
+    }
+    lastTwo();
+  if (isTwoCards() && !isMatch(cardsInPlay)){
+      removeListeners(cards);
+      setTimeout(unFlipCards, 3000);
+    } else if (isTwoCards() && isMatch(cardsInPlay)){
+      matched(cardsInPlay[0], cardsInPlay[1]);
+      cardsInPlay = [];
+      if (allCards()){
+    setTimeout(restart, 3000);
+      cardsInPlay = [];
+        }
+      }
+  };
 
+    createBoard(numOfCards);
+    shuffle(cards);
+    setClass(cards);
+    drawBoard(cards, Card.rank);
 //confirms that all cards have been flipped
 
-// function restart(){
-//   cards = [];
-//   gameBoard.innerHTML = "";
-// }
+
+
+const restart = function(){
+  cards = [];
+  while (gameBoard.firstChild) {
+    gameBoard.removeChild(gameBoard.firstChild);
+  }
+};
 
 //figure out how to reset when all cards are flipped
 //"Play again" button

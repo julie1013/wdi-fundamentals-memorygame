@@ -1,8 +1,6 @@
 
 let gameBoard = document.getElementById("game-board");
 
-let numOfCards = deckSize();
-
 let cards = [];
 
 let cardsInPlay = [];
@@ -18,7 +16,18 @@ const Card = function(rank){
 let king = new Card("king");
 let queen = new Card("queen");
 
-function getRandomIndex(){
+// const deckSize = function(){
+//   return 4 *(Math.floor(Math.random() * 25) + 1);
+// }
+//randomly chooses a number (divisible by 4) between 4 and 100
+const deckSize = function(){
+  return 4 *(Math.floor(Math.random() * 2) + 1);
+};
+
+let numOfCards = deckSize();
+
+
+const getRandomIndex = function(){
   return Math.floor(Math.random() * (numOfCards));
 }
 
@@ -44,6 +53,25 @@ const setRank = function(index){
 };
 //sets rank to card
 
+const flip = function(){
+  cardsInPlay.push(this);
+  if (this.className === "queen unflipped"){
+      this.className = "queen flipped";
+    } else if (this.className === "king unflipped"){
+      this.className = "king flipped";
+    }
+    lastTwo();
+  if (isTwoCards() && !isMatch(cardsInPlay)){
+      removeListeners(cards);
+      setTimeout(unFlipCards(cardsInPlay), 3000);
+    } else if (isTwoCards() && isMatch(cardsInPlay)){
+      matched(cardsInPlay[0], cardsInPlay[1]);
+      cardsInPlay = [];
+        // if (allCards()){
+      // setTimeout(restart, 3000);
+        }
+      };
+
 const drawBoard = function(array, type){
   for (let i = 0; i < array.length; i++){
     let card = document.createElement("div");
@@ -53,7 +81,9 @@ const drawBoard = function(array, type){
       card.className = "queen";
     }
     card.classList.add("unflipped");
+    card.addEventListener("click", flip);
     gameBoard.appendChild(card);
+
   }
 };
 
@@ -90,54 +120,34 @@ createBoard(numOfCards);
 shuffle(cards);
 setClass(cards);
 drawBoard(cards, Card.rank);
-addListeners(cards);
 
 
-
-
-
-// function deckSize(){
-//   return 4 *(Math.floor(Math.random() * 25) + 1);
-// }
-//randomly chooses a number (divisible by 4) between 4 and 100
-function deckSize(){
-  return 4 *(Math.floor(Math.random() * 2) + 1);
-}
-
-function addListeners(array){
+const addListeners = function(array){
   for (var i = 0; i < array.length; i++){
     array[i].addEventListener("click", flip);
   }
-}
+};
 // //adds event listeners
 //
 //
-function flip(){
-  cardsInPlay.push(this);
-  if (this.className === "queen unflipped"){
-      this.className = "queen flipped";
-    } else if (this.className === "king unflipped"){
-      this.className = "king flipped";
-    }
-    lastTwo();
-  if (isTwoCards() && !isMatch(cardsInPlay)){
-      removeListeners();
-      setTimeout(unFlipCards, 3000);
-    } else if (isTwoCards() && isMatch(cardsInPlay)){
-      matched(cardsInPlay[0], cardsInPlay[1]);
-      cardsInPlay = [];
-        // if (allCards()){
-      // setTimeout(restart, 3000);
-        }
-      }
+
 // //on "click" this function is called. If two cards are a match, they are pushed to the confirmed cards array.
-//
-function isTwoCards(){
+
+const lastTwo = function() {
+  if (cardsInPlay.length > 2){
+    cardsInPlay.splice(0, cardsInPlay.length - 2);
+  }
+  return cardsInPlay;
+};
+// //returns an array of the last two cards that were played
+
+
+const isTwoCards = function(){
   return cardsInPlay.length === 2;
-}
+};
 // //checks if two cards are in play
 //
-function isMatch(cardsInPlay){
+const isMatch = function(cardsInPlay){
   var firstCard;
   var secondCard;
   for (var i = 0; i < cardsInPlay.length; i++){
@@ -145,38 +155,31 @@ function isMatch(cardsInPlay){
     secondCard = cardsInPlay[1].classList[0];
   }
   return firstCard === secondCard;
-}
+};
 // //check if two cards are matched
 //
-function matched(a, b){
+const matched = function(a, b){
   confirmedCards.push(a, b);
   return confirmedCards;
-}
+};
 // //pushes matched cards into a new array that keeps track of how many cards have been flipped
 //
-function removeListeners(){
-  for (var i = 0; i < cards.length; i++){
-      cards[i].removeEventListener("click", flip);
+const removeListeners = function(array){
+  for (var i = 0; i < array.length; i++){
+      array[i].removeEventListener("click", flip);
   }
-}
+};
 // //removes event listeners
+//not working
 //
-function lastTwo() {
-  if (cardsInPlay.length > 2){
-    cardsInPlay.splice(0, cardsInPlay.length - 2);
+const unFlipCards = function(array){
+  for (var i = 0; i < array.length; i++){
+    array[i].classList.remove("flipped");
+    array[i].classList.add("unflipped");
   }
-  return cardsInPlay;
-}
-// //returns an array of the last two cards that were played
-//
-function unFlipCards(){
-  for (var i = 0; i < cardsInPlay.length; i++){
-    cardsInPlay[i].classList.remove("flipped");
-    cardsInPlay[i].classList.add("unflipped");
-  }
-  cardsInPlay =[];
-  addListeners();
-}
+  array =[];
+  // addListeners();
+};
 // //unflip non-matched cards
 //
 // function allCards(){

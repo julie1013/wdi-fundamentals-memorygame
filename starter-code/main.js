@@ -63,12 +63,12 @@ const flip = function(){
     lastTwo();
   if (isTwoCards() && !isMatch(cardsInPlay)){
       removeListeners(cards);
-      setTimeout(unFlipCards(cardsInPlay), 3000);
+      setTimeout(unFlipCards, 3000);
     } else if (isTwoCards() && isMatch(cardsInPlay)){
       matched(cardsInPlay[0], cardsInPlay[1]);
-      cardsInPlay = [];
         // if (allCards()){
       // setTimeout(restart, 3000);
+      cardsInPlay = [];
         }
       };
 
@@ -122,14 +122,23 @@ setClass(cards);
 drawBoard(cards, Card.rank);
 
 
-const addListeners = function(array){
-  for (var i = 0; i < array.length; i++){
-    array[i].addEventListener("click", flip);
+const addListeners = function(){
+  let cards = gameBoard.children;
+  for (var i = 0; i < cards.length; i++){
+    cards[i].addEventListener("click", flip);
   }
 };
 // //adds event listeners
 //
 //
+
+const removeListeners = function(){
+  let cards = gameBoard.children;
+  for (let i = 0; i < cards.length; i++){
+    cards[i].removeEventListener("click", flip);
+    }
+ };
+// //removes event listeners
 
 // //on "click" this function is called. If two cards are a match, they are pushed to the confirmed cards array.
 
@@ -164,21 +173,15 @@ const matched = function(a, b){
 };
 // //pushes matched cards into a new array that keeps track of how many cards have been flipped
 //
-const removeListeners = function(array){
-  for (var i = 0; i < array.length; i++){
-      array[i].removeEventListener("click", flip);
+
+
+const unFlipCards = function(){
+  for (var i = 0; i < cardsInPlay.length; i++){
+    cardsInPlay[i].classList.remove("flipped");
+    cardsInPlay[i].classList.add("unflipped");
   }
-};
-// //removes event listeners
-//not working
-//
-const unFlipCards = function(array){
-  for (var i = 0; i < array.length; i++){
-    array[i].classList.remove("flipped");
-    array[i].classList.add("unflipped");
-  }
-  array =[];
-  // addListeners();
+  cardsInPlay = [];
+  addListeners(cards);
 };
 // //unflip non-matched cards
 //

@@ -13,6 +13,7 @@ const Card = function(rank){
   this.rank = rank;
 };
 
+
 let king = new Card("king");
 let queen = new Card("queen");
 
@@ -162,7 +163,7 @@ const unFlipCards = function(){
   cardsInPlay = [];
   addListeners(cards);
 };
-// //unflip non-matched cards
+//unflip non-matched cards
 
 const flip = function(){
   cardsInPlay.push(this);
@@ -180,7 +181,6 @@ const flip = function(){
       cardsInPlay = [];
       if (allCards()){
     setTimeout(restart, 3000);
-      cardsInPlay = [];
         }
       }
   };
@@ -194,14 +194,21 @@ const flip = function(){
 
 
 const restart = function(){
-  cards = [];
   while (gameBoard.firstChild) {
     gameBoard.removeChild(gameBoard.firstChild);
   }
+  cards = [];
+  cardsInPlay = [];
+  confirmedCards = [];
+  usedIndex = [];
+  numOfCards = deckSize();
+  createBoard(numOfCards);
+  shuffle(cards);
+  setClass(cards);
+  drawBoard(cards, Card.rank);
 };
 
+
+
 //figure out how to reset when all cards are flipped
-//"Play again" button
-//once random index is used, it cannot be used again-- figure out how to prevent
-// duplicate indexes from being used
 //If possible, center bottom row
